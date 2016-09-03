@@ -1,5 +1,7 @@
 package com.training.spring.bean;
 
+import com.training.spring.bean.log.api.EventType;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -11,8 +13,10 @@ public class Event {
     private String message;
     private Date date;
     private DateFormat dateFormat;
+    private EventType type;
 
     public Event(Date date, DateFormat dateFormat) {
+        this.type = EventType.INFO;
         this.date = date;
         this.dateFormat = dateFormat;
     }
@@ -56,8 +60,21 @@ public class Event {
         this.dateFormat = dateFormat;
     }
 
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public String getFormattedDate(){
+        return dateFormat.format(date);
+    }
+
     @Override
     public String toString() {
-        return dateFormat.format(date) + " ---> " + message;
+        return " --- " + type +
+                " ---> " + message;
     }
 }

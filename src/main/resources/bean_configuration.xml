@@ -3,36 +3,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <!-- Simple HelloWorld example-->
-    <bean id="helloBean" class="com.training.spring.bean.HelloWorld"/>
-
-
-    <!-- Creating DateFormat instance for event -->
-    <bean id="dateFormat" class="java.text.SimpleDateFormat"/>
-    <!-- Event initialization -->
-    <bean id="event" class="com.training.spring.bean.Event" scope="prototype">
-        <constructor-arg>
-            <bean class="java.util.Date"/>
-        </constructor-arg>
-        <constructor-arg ref="dateFormat"/>
-    </bean>
-
-    <!--Creating event logger instances -->
-    <bean id="consoleLogger" class="com.training.spring.bean.log.ConsoleEventLogger"/>
-
-    <bean id="fileLogger" class="com.training.spring.bean.log.FileEventLogger" init-method="init">
-        <constructor-arg value="fileLog.txt"/>
-    </bean>
-
-    <!--Creating EventLogger manager and injecting loggers-->
-    <bean id="loggerManager" class="com.training.spring.bean.log.LoggerManager">
-        <constructor-arg>
-            <list>
-                <ref bean="consoleLogger"/>
-                <ref bean="fileLogger"/>
-            </list>
-        </constructor-arg>
-    </bean>
-
 
 </beans>

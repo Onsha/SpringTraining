@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>logAppenders.properties</value>
+        </property>
+    </bean>
+
+    <!-- Creating DateFormat instance for event -->
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="${datePattern}"/>
+    </bean>
+    <!-- Event initialization -->
+    <bean id="event" class="com.training.spring.bean.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+        <property name="type" value="INFO"/>
+    </bean>
+
+    <!--Creating event logger instances -->
+    <bean id="consoleLogger" class="com.training.spring.bean.log.ConsoleEventLogger"/>
+
+
+    <bean id="errorFileLogger" class="com.training.spring.bean.log.FileEventLogger" init-method="init">
+        <constructor-arg value="${ERROR}"/>
+    </bean>
+
+    <bean id="warnFileLogger" class="com.training.spring.bean.log.FileEventLogger" init-method="init">
+        <constructor-arg value="${WARN}"/>
+    </bean>
+
+    <bean id="loggerManager" class="com.training.spring.bean.log.LoggerManagerImpl">
+        <constructor-arg ref="levelAppenders"/>
+    </bean>
+
+    <!--End of event initializing-->
+
+</beans>
